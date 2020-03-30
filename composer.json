@@ -1,0 +1,19 @@
+{
+  "require-dev": {
+    "phpunit/phpunit": "^5.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "UCOM\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "UCOM\\Test\\": "tests/"
+    }
+  },
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*"
+  }
+}
