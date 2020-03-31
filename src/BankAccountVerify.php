@@ -69,7 +69,8 @@ class BankAccountVerify
         ///fetch all banks
         $body = "Secret%20Key=" . $this->api_secret;
         $response = $this->curl($this->url, $body);
-
+        ///update banks.json file
+        file_put_contents('banks.json', $response);
         return json_decode($response);
     }
 

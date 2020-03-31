@@ -103,7 +103,7 @@ class Payout
         $iv = (new BankAccountVerify($this->api_keys(),$this->fetchBanksEndpoint,$this->resolveAccountEndpoint));
         //$bankCode = $iv->fetchBankCode($this->bankName);
         //die($bankCode);
-        $accName = $iv->fetchAccount($bankCode, $this->account);
+        $accName = $iv->fetchAccount($this->bankCode, $this->account);
         //die($accName);
         if ($accName == $this->accountName) {
             ///account details provided is valid
@@ -196,4 +196,5 @@ class Payout
     {
         // TODO: Implement listenForNotification() method.
     }
+
 }
