@@ -16,5 +16,13 @@ return [
     'transaction_details_link' => 'https://sandbox.wallets.africa/transfer/bank/details', // get the status of a transaction
     'account_enquiry_link' => 'https://sandbox.wallets.africa/transfer/bank/account/enquire', //confirm account details
     'allBanks_link' => 'https://sandbox.wallets.africa/transfer/banks/all', //fetch banks and their codes
+
+    ///live urls
+
+    'live_balance_link' => 'https://api.wallets.africa/self/balance', // check balance
+    'live_transfer_link' => 'https://api.wallets.africa/transfer/bank/account', //make transfer
+    'live_transaction_details_link' => 'https://api.wallets.africa/transfer/bank/details', // get the status of a transaction
+    'live_account_enquiry_link' => 'https://api.wallets.africa/transfer/bank/account/enquire', //confirm account details
+    'live_allBanks_link' => 'https://api.wallets.africa/transfer/banks/all', //fetch banks and their codes
 ];
 

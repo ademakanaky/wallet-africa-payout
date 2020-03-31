@@ -22,9 +22,10 @@ class Payout
     protected $secret;
     protected $pubKey;
 
-    public function __construct($bankName, $accountNo, $accountName, $amount)
+    public function __construct($bankCode, $accountNo, $accountName, $amount)
     {
-        $this->bankName = $bankName;
+        //$this->bankName = $bankName;
+        $this->bankCode = $bankCode;
         $this->account = $accountNo;
         $this->amount = $amount;
         $this->accountName = $accountName;
@@ -37,11 +38,15 @@ class Payout
             $this->initiateTransferEndpoint = $config['transfer_link'];
             $this->fetchTransferStatusEndpoint = $config['transaction_details_link'];
             $this->fetchBanksEndpoint = $config['allBanks_link'];
-            $this->checkBalanceEndpoint = $config['balance_link'];
             $this->resolveAccountEndpoint = $config['account_enquiry_link'];
         }else{
             $this->secret = $config['live_api_secret_key'];
             $this->pubKey = $config['live_api_public_key'];
+            $this->checkBalanceEndpoint = $config['live_balance_link'];
+            $this->initiateTransferEndpoint = $config['live_transfer_link'];
+            $this->fetchTransferStatusEndpoint = $config['live_transaction_details_link'];
+            $this->fetchBanksEndpoint = $config['live_allBanks_link'];
+            $this->resolveAccountEndpoint = $config['live_account_enquiry_link'];
         }
             
     }
@@ -96,13 +101,13 @@ class Payout
     private function validateAccount()
     {
         $iv = (new BankAccountVerify($this->api_keys(),$this->fetchBanksEndpoint,$this->resolveAccountEndpoint));
-        $bankCode = $iv->fetchBankCode($this->bankName);
+        //$bankCode = $iv->fetchBankCode($this->bankName);
         //die($bankCode);
         $accName = $iv->fetchAccount($bankCode, $this->account);
         //die($accName);
         if ($accName == $this->accountName) {
             ///account details provided is valid
-            $data = array('code'=> $bankCode, 'accname' => $accName);
+            $data = array('code'=> $this->bankCode, 'accname' => $accName);
             return json_encode($data);
         }else{
             ////account details provided is invalid
@@ -131,9 +136,9 @@ class Payout
         /// Only transfer if there is enough balance.
         /// So there is a need to check balance before initiating transfer. You should uncomment the /// code block below
 
-        /*if (!$this->canTransfer()) {
+        if (!$this->canTransfer()) {
             return $this->InsufficientBalanceMessage();
-        }*/
+        }
 
         //save this $transref in db transactions table alongside other details of the transaction
         $transref = uniqid();

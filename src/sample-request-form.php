@@ -38,9 +38,13 @@
 				<div class="col">
 					<!-- Last name -->
 					<!--<input type="text" name="bankname" placeholder="Enter Bank Name" required class="form-control">-->
-					<select name="bankname" class="form-control">
-                                   <option>Values to be populated using the banks.json file</option>
-                             </select>
+					<select name="bankcode" class="form-control" required>
+						<?php $data = json_decode(file_get_contents('banks.json'),true); 
+						 	for ($i=0; $i < count($data); $i++) { 
+						 		echo "<option value=".$data[$i]["BankCode"].">". $data[$i]["BankName"] ."</option>";
+						 	}
+						?>
+                    </select>
 				</div>
 			</div>
 
