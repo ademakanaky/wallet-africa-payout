@@ -11,7 +11,7 @@ class Payout
 
     private $bankName;
     private $account;
-    private $accountName;
+    //private $accountName;
     private $amount;
     private $initiateTransferEndpoint;
     private $checkBalanceEndpoint;
@@ -22,13 +22,13 @@ class Payout
     protected $secret;
     protected $pubKey;
 
-    public function __construct($bankCode, $accountNo, $accountName, $amount)
+    public function __construct($bankCode, $accountNo, $amount)
     {
         //$this->bankName = $bankName;
         $this->bankCode = $bankCode;
         $this->account = $accountNo;
         $this->amount = $amount;
-        $this->accountName = $accountName;
+        //$this->accountName = $accountName;
         $config = require 'config.php';
         $this->currency = $config['currency'];
         if ($config['mode'] == 'test'){
@@ -98,14 +98,11 @@ class Payout
         }
     }
 
-    private function validateAccount()
+    public function validateAccount()
     {
         $iv = (new BankAccountVerify($this->api_keys(),$this->fetchBanksEndpoint,$this->resolveAccountEndpoint));
-        //$bankCode = $iv->fetchBankCode($this->bankName);
-        //die($bankCode);
         $accName = $iv->fetchAccount($this->bankCode, $this->account);
-        //die($accName);
-        if ($accName == $this->accountName) {
+        if (!is_null($accName)) {
             ///account details provided is valid
             $data = array('code'=> $this->bankCode, 'accname' => $accName);
             return json_encode($data);
@@ -114,6 +111,7 @@ class Payout
             return 'Could not resolve account at the moment';
         }
     }
+
 
     private function genTranxRef($length)
     {

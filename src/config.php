@@ -2,7 +2,7 @@
 
 return [
     ///mode switch - live or test
-    'mode' => 'test',
+    'mode' => 'live',
     'test_api_secret_key' => 'hfucj5jatq8h',
     'test_api_public_key' => 'uvjqzm5xl6bw',
 

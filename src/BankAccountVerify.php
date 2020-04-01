@@ -62,7 +62,7 @@ class BankAccountVerify
         if(!is_null($resp->AccountName))
             return $resp->AccountName;
         else
-            return "Could not resolve name. Please try again later.";
+            return null;
     }
 
     public function fetchBanks(){
